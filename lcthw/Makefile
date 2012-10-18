@@ -1,0 +1,2 @@
+CPPFLAGS= -g -Wall -Werror
+
