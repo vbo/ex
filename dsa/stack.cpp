@@ -25,8 +25,8 @@ bool pop(Node** head, int* data) {
     }
     Node *new_head = old_head->next;
     *data = old_head->data;
-    delete old_head;
     *head = new_head;
+    delete old_head;
     return true;
 }
 
