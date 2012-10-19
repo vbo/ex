@@ -62,9 +62,9 @@ void dump(Node* root, std::string offset = "") {
     if (!root) {
         return;
     }
+    dump(root->left, offset + "l\t");
     std::cout << offset << root->data << std::endl;
     dump(root->right, offset + "r\t");
-    dump(root->left, offset + "l\t");
 }
 
 int main() {
