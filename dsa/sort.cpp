@@ -53,14 +53,52 @@ void quicksort(int arr[], int start, int end) {
     quicksort(arr, store_i + 1, end);
 }
 
+void merge(int arr[], int start, int mid, int end) {
+    int buf_size = end - start + 1;
+    int buf[buf_size]; // can we do it without a buffer?!!
+    int buf_i = 0;
+    int i = start;
+    int j = mid + 1;
+    while (buf_i < buf_size) {
+        int *b = &buf[buf_i];
+        int arr_i;
+        if (i <= mid && j <= end) {
+            if (arr[j] < arr[i]) {
+                arr_i = j++;
+            } else {
+                arr_i = i++;
+            }
+        } else if (i <= mid) {
+            arr_i = i++;
+        } else {
+            arr_i = j++;
+        }
+        *b = arr[arr_i];
+        buf_i++;
+    }
+    for (int i = 0; i < buf_size; i++) {
+        arr[start + i] = buf[i];
+    }
+}
+
+void mergesort(int arr[], int start, int end) {
+    if (end <= start) {
+        return;
+    }
+    int mid = start + (end - start) / 2;
+    mergesort(arr, start, mid);
+    mergesort(arr, mid + 1, end);
+    merge(arr, start, mid, end);
+}
+
 
 int main() {
     const int n = 10;
-    int a[] = {6, 2, 3, 4, 100, 6, 7, 8, 9, 10};
+    int a[] = {6, 9, 3, 4, 100, 6, 8, 7, 2, 10};
     cout << "original" << endl;
     dump(a, n);
     //bubblesort(a, n);
-    quicksort(a, 0, n - 1);
+    mergesort(a, 0, n - 1);
     dump(a, n);
     return 0;
 }
