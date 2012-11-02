@@ -34,24 +34,23 @@ void bubblesort(int arr[], int size) {
     }
 }
 
-void quicksort(int arr[], int size, int start, int end) {
-    if (size < 2) {
+void quicksort(int arr[], int start, int end) {
+    if (end <= start) {
         return;
     }
-    int pivot = arr[start];
-    int pivot_i = start;
-    for (int i = start + 1; i < end; i++) {
+    int pivot_i = start + (end - start) / 2;
+    int pivot = arr[pivot_i];
+    swap(&arr[pivot_i], &arr[end]);
+    int store_i = start;
+    for (int i = start; i < end; i++) {
         if (arr[i] < pivot) {
-            int v = arr[i];
-            for (int j = i; j > pivot_i; j--) {
-                arr[j] = arr[j-1];
-            }
-            arr[pivot_i] = v;
-            pivot_i += 1;
+            swap(&arr[i], &arr[store_i]);
+            store_i += 1;
         }
     }
-    quicksort(arr, pivot_i - start, start, pivot_i);
-    quicksort(arr, end - pivot_i, pivot_i + 1, end);
+    swap(&arr[store_i], &arr[end]);
+    quicksort(arr, start, store_i - 1);
+    quicksort(arr, store_i + 1, end);
 }
 
 
@@ -61,7 +60,7 @@ int main() {
     cout << "original" << endl;
     dump(a, n);
     //bubblesort(a, n);
-    quicksort(a, n, 0, n);
+    quicksort(a, 0, n - 1);
     dump(a, n);
     return 0;
 }
