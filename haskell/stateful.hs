@@ -79,6 +79,10 @@ operateOnState = do
     addLog $ "Result: " ++ (show result)
     return result
 
+opSt2 = do
+    v <- getVal
+    putVal v
+
 main :: IO ()
 main = do
     print "Hell"
