@@ -10,7 +10,7 @@ map f (Cons x xs) = Cons (f x) (map f xs)
 
 reverse :: List a -> List a
 reverse xs = _reverse xs Nil
-    where 
+  where 
     _reverse xs ac = case xs of
         Nil        -> ac
         Cons x xs -> _reverse xs (Cons x ac)
@@ -78,7 +78,7 @@ intersperse v (Cons x xs)  = Cons x . Cons v $ intersperse v xs
 
 concat :: List (List a) -> List a
 concat xss = _impl xss Nil
-    where
+  where
     _impl Nil           a = a
     _impl (Cons xs xss) a = append xs $ _impl xss a
 
