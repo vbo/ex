@@ -81,7 +81,7 @@ operateOnState = do
 
 opSt2 = do
     v <- getVal
-    putVal v
+    setVal v
 
 main :: IO ()
 main = do

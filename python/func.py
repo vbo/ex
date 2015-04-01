@@ -3,10 +3,12 @@ def openRange(start):
         yield start
         start += 1
 
+
 def take(n, it):
     while n > 0:
         yield next(it)
         n -= 1
+
 
 def takeWhile(pred, it):
     for x in it:
@@ -14,18 +16,22 @@ def takeWhile(pred, it):
             return
         yield x
 
+
 def any(it):
     for x in it:
         if x:
             return True
     return False
 
+
 def primes_rec():
     def sieve(it):
         p = next(it)
         yield p
         yield from sieve(x for x in it if x % p > 0)
+
     yield from sieve(openRange(2))
+
 
 def primes_iter():
     gen = lambda it, p: (x for x in it if x % p > 0)
@@ -35,6 +41,7 @@ def primes_iter():
         yield p
         it = gen(it, p)
 
+
 def foldl(f, z, xs):
     try:
         x = next(xs)
@@ -42,10 +49,12 @@ def foldl(f, z, xs):
         return z
     return foldl(f, f(z, x), xs)
 
+
 def foldlIterative(f, z, xs):
     for x in xs:
         z = f(z, x)
     return z
+
 
 def foldr(f, z, xs):
     try:
@@ -53,6 +62,7 @@ def foldr(f, z, xs):
     except StopIteration:
         return z
     return f(x, foldr(f, z, xs))
+
 
 def lazy_foldr(f, z, xs):
     try:
@@ -76,13 +86,15 @@ if __name__ == "__main__":
     def cons(x, z):
         yield x
         yield from z
+
     def emp():
         return
         yield
-    #print(list(take(0, foldr(cons, emp(), openRange(0))))) # this does not work because of strictness =(
+
+    # print(list(take(0, foldr(cons, emp(), openRange(0))))) # this does not work because of strictness =(
 
     def cons_for_lazy(x, z):
         yield x
         yield from z()
 
-    print(list(take(10, lazy_foldr(cons_for_lazy, emp, openRange(0))))) # this works because of manual lazyfication ;)
+    print(list(take(10, lazy_foldr(cons_for_lazy, emp, openRange(0)))))  # this works because of manual lazyfication ;)
